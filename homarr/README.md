@@ -1,6 +1,6 @@
-# 🌐 Home Assistant Add-on: Homarr v1 Server 🚀
+# Home Assistant Add-on: Homarr v1
 
-Welcome to the **Homarr v1 Server for Home Assistant** App on this repository. This add-on allows you to run the Homarr v1 dashboard as a standalone service.
+Welcome to the **Homarr v1 App for Home Assistant** on this repository. This add-on allows you to run the Homarr v1 dashboard as a standalone service.
 
 ## Features
 
