@@ -1,5 +1,5 @@
 name: "Homarr"
-description: "Homarr v1 integration for Home Assistant"
+description: "Homarr v1 App for HAOS"
 version: "1.0.1"
 slug: "homarr_addon"
 init: false
