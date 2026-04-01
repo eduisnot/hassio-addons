@@ -1,0 +1,34 @@
+name: "Readeck"
+description: "Readeck - save and read it later"
+version: "0.22.2"
+slug: "readeck"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armv7
+homeassistant: "2023.1.0"
+url: "https://readeck.org"
+
+image: "codeberg.org/readeck/readeck"
+
+ports:
+  8000/tcp: 8000
+
+ports_description:
+  8000/tcp: "Readeck Web UI"
+
+map:
+  - share:rw
+
+environment:
+  READECK_SERVER_HOST: "0.0.0.0"
+  READECK_SERVER_PORT: "8000"
+  READECK_LOG_LEVEL: "info"
+  READECK_DATA_DIRECTORY: "/share/readeck"
+
+options:
+  log_level: "info"
+
+schema:
+  log_level: list(error|warn|info|debug)
