@@ -18,25 +18,25 @@ startup: "application"
 boot: "auto"
 
 ports:
-  8081/tcp: 8081
+  9090/tcp: 9090
   6881/tcp: 6881
   6881/udp: 6881
 ports_description:
-  8081/tcp: "qBittorrent WebUI"
+  9090/tcp: "qBittorrent WebUI"
   6881/tcp: "Torrenting (TCP)"
   6881/udp: "Torrenting (UDP)"
 
-webui: "http://[HOST]:[PORT:8081]"
+webui: "http://[HOST]:[PORT:9090]"
 
 ingress: true
-ingress_port: 8081
+ingress_port: 9090
 
 map:
   - share:rw
   - media:rw
 
 options:
-  WEBUI_PORT: 8081
+  WEBUI_PORT: 9090
   TORRENTING_PORT: 6881
   PUID: 1000
   PGID: 1000
