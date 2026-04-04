@@ -21,6 +21,8 @@
 3. Add the URL of your repository.
 4. Search for **qBittorrent** and install it.
 
+ALERT: By default, I decided to limit CPU = 2 cores, RAM = 1536MB, as to avoid overcharging a HAOS server, change it or disable both limits in config.yaml
+
 ## Quick start
 
 - WebUI available at `http://<your-ha-ip>:8080`
