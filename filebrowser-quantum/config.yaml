@@ -23,9 +23,12 @@ ports_description:
 webui: "http://[HOST]:[PORT:80]"
 
 map:
+  # Raíz de trabajo: todo /share se verá como /srv
   - type: share
     read_only: false
-    path: /share
+    path: /srv
+
+  # Otras carpetas principales de HAOS
   - type: homeassistant_config
     read_only: false
     path: /ha_config
@@ -48,7 +51,8 @@ map:
 schema: false
 
 environment:
-  FB_DATABASE: "/share/filebrowser/database.db"
-  FB_CONFIG: "/share/filebrowser/config.yaml"
+  # Dentro del contenedor: /srv/filebrowser  ->  host: /share/filebrowser
+  FILEBROWSER_DATABASE: "/srv/filebrowser/database.db"
+  FILEBROWSER_CONFIG: "/srv/filebrowser/config.json"
 
 panel_icon: "mdi:folder-multiple"
