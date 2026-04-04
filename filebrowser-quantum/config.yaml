@@ -1,0 +1,54 @@
+name: "FileBrowser Quantum"
+version: "latest"
+slug: "filebrowser_quantum"
+description: "Web file manager based on FileBrowser Quantum."
+url: "https://filebrowserquantum.com/"
+
+arch:
+  - aarch64
+  - amd64
+
+image: "gtstef/filebrowser"
+
+init: false
+startup: "application"
+boot: "auto"
+
+ports:
+  80/tcp: 8383
+
+ports_description:
+  80/tcp: "FileBrowser Quantum WebUI"
+
+webui: "http://[HOST]:[PORT:80]"
+
+map:
+  - type: share
+    read_only: false
+    path: /share
+  - type: homeassistant_config
+    read_only: false
+    path: /ha_config
+  - type: ssl
+    read_only: false
+    path: /ssl
+  - type: addons
+    read_only: false
+    path: /addons
+  - type: backup
+    read_only: false
+    path: /backup
+  - type: media
+    read_only: false
+    path: /media
+  - type: all_addon_configs
+    read_only: false
+    path: /addon_configs
+
+schema: false
+
+environment:
+  FB_DATABASE: "/share/filebrowser/database.db"
+  FB_CONFIG: "/share/filebrowser/config.yaml"
+
+panel_icon: "mdi:folder-multiple"
