@@ -18,25 +18,25 @@ startup: "application"
 boot: "auto"
 
 ports:
-  8080/tcp: 8080
+  8081/tcp: 8081
   6881/tcp: 6881
   6881/udp: 6881
 ports_description:
-  8080/tcp: "qBittorrent WebUI"
+  8081/tcp: "qBittorrent WebUI"
   6881/tcp: "Torrenting (TCP)"
   6881/udp: "Torrenting (UDP)"
 
-webui: "http://[HOST]:[PORT:8080]"
+webui: "http://[HOST]:[PORT:8081]"
 
 ingress: true
-ingress_port: 8080
+ingress_port: 8081
 
 map:
   - share:rw
   - media:rw
 
 options:
-  WEBUI_PORT: 8080
+  WEBUI_PORT: 8081
   TORRENTING_PORT: 6881
   PUID: 1000
   PGID: 1000
@@ -44,8 +44,8 @@ options:
   media_folders:
     - /media/multimedia/downloads
     - /media/multimedia/Movies
-  cpu_percent: 80
-  memory_mb: 512
+  cpu_percent: 50
+  memory_mb: 1024
 
 schema:
   WEBUI_PORT: int
