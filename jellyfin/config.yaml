@@ -18,14 +18,12 @@ ports:
   8096/tcp: 8096
   8920/tcp: null
   7359/udp: 7359
-  1900/udp: 1900
 
 ports_description:
   8096/tcp: "Jellyfin WebUI (HTTP)"
   8920/tcp: "Jellyfin WebUI (HTTPS, optional)"
   7359/udp: "Client discovery"
-  1900/udp: "DLNA discovery"
-
+  
 webui: "http://[HOST]:[PORT:8096]"
 
 map:
