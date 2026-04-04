@@ -1,0 +1,52 @@
+name: "Jellyfin"
+version: "latest"
+slug: "jellyfin"
+description: "Jellyfin media server using the official container image."
+url: "https://jellyfin.org/"
+
+arch:
+  - aarch64
+  - amd64
+
+image: "jellyfin/jellyfin"
+
+init: false
+startup: "application"
+boot: "auto"
+
+ports:
+  8096/tcp: 8096
+  8920/tcp: null
+  7359/udp: 7359
+  1900/udp: 1900
+
+ports_description:
+  8096/tcp: "Jellyfin WebUI (HTTP)"
+  8920/tcp: "Jellyfin WebUI (HTTPS, optional)"
+  7359/udp: "Client discovery"
+  1900/udp: "DLNA discovery"
+
+webui: "http://[HOST]:[PORT:8096]"
+
+map:
+  - type: share
+    read_only: false
+    path: /share
+  - type: media
+    read_only: false
+    path: /media
+
+options:
+  TZ: "Europe/Madrid"
+
+schema:
+  TZ: str
+
+environment:
+  TZ: "Europe/Madrid"
+  JELLYFIN_CONFIG_DIR: "/share/jellyfin/config"
+  JELLYFIN_DATA_DIR: "/share/jellyfin/data"
+  JELLYFIN_CACHE_DIR: "/share/jellyfin/cache"
+  JELLYFIN_LOG_DIR: "/share/jellyfin/log"
+
+panel_icon: "mdi:jellyfish"
