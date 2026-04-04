@@ -30,8 +30,12 @@ webui: "http://[HOST]:[PORT:9090]"
 ingress: false
 
 map:
-  - share:rw
-  - media:rw
+  - type: share
+    read_only: false
+    path: /config
+  - type: media
+    read_only: false
+    path: /downloads
 
 options:
   PUID: 1000
