@@ -11,6 +11,7 @@
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 
 **qBittorrent** BitTorrent client for Home Assistant OS, using the official [linuxserver.io](https://linuxserver.io) image.
+ATTENTION: It uses the 9090 port, not the usual 8080
 
 ## Installation
 
@@ -21,7 +22,7 @@
 
 ## Quick start
 
-- WebUI available at `http://<your-ha-ip>:8080`
+- WebUI available at `http://<your-ha-ip>:9090`
 - Username: `admin` | Password: `adminadmin` (change it immediately!)
 - Persistent config stored at `/share/qbittorrent/`
 - Downloads saved to `/media/multimedia/descargas`
