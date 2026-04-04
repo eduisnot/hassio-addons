@@ -1,0 +1,28 @@
+{
+  "configuration": {
+    "WEBUI_PORT": {
+      "name": "WebUI Port",
+      "description": "Port where the qBittorrent web interface will be exposed. Default: 8080."
+    },
+    "TORRENTING_PORT": {
+      "name": "Torrenting Port",
+      "description": "Port used for torrenting connections (TCP and UDP). Default: 6881."
+    },
+    "PUID": {
+      "name": "User ID (PUID)",
+      "description": "User ID the process will run as. Use 1000 for the default HA user."
+    },
+    "PGID": {
+      "name": "Group ID (PGID)",
+      "description": "Group ID the process will run as. Use 1000 for the default HA group."
+    },
+    "TZ": {
+      "name": "Timezone",
+      "description": "System timezone. Example: Europe/Madrid, America/New_York."
+    },
+    "media_folders": {
+      "name": "Media Folders",
+      "description": "List of host folders made available to qBittorrent. Add or remove paths here — each one must start with /media or /share. The first entry becomes the default save path. Changes take effect after restarting the add-on."
+    }
+  }
+}

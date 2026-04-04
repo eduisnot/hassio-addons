@@ -1,0 +1,28 @@
+{
+  "configuration": {
+    "WEBUI_PORT": {
+      "name": "Puerto WebUI",
+      "description": "Puerto en el que se expondrá la interfaz web de qBittorrent. Por defecto: 8080."
+    },
+    "TORRENTING_PORT": {
+      "name": "Puerto de Torrenting",
+      "description": "Puerto utilizado para las conexiones de torrenting (TCP y UDP). Por defecto: 6881."
+    },
+    "PUID": {
+      "name": "UID de usuario",
+      "description": "ID de usuario con el que correrá el proceso. Use 1000 para el usuario por defecto de HA."
+    },
+    "PGID": {
+      "name": "GID de grupo",
+      "description": "ID de grupo con el que correrá el proceso. Use 1000 para el grupo por defecto de HA."
+    },
+    "TZ": {
+      "name": "Zona horaria",
+      "description": "Zona horaria del sistema. Ejemplo: Europe/Madrid, America/New_York."
+    },
+    "media_folders": {
+      "name": "Carpetas multimedia",
+      "description": "Lista de carpetas del host accesibles por qBittorrent. Añade o elimina rutas desde aquí — cada una debe comenzar por /media o /share. La primera entrada se usará como ruta de descarga por defecto. Los cambios se aplican al reiniciar el addon."
+    }
+  }
+}

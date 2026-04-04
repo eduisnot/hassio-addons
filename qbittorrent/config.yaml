@@ -1,0 +1,107 @@
+name: "qBittorrent"
+description: "qBittorrent torrent client with WebUI. Based on the official linuxserver/qbittorrent image."
+version: "1.0.0"
+slug: "qbittorrent"
+init: false
+homeassistant_api: false
+auth_api: false
+
+url: "https://github.com/qbittorrent/qBittorrent"
+
+# Official linuxserver image
+image: "lscr.io/linuxserver/qbittorrent"
+
+# Supported architectures
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+
+# Configuration options available to the user
+options:
+  WEBUI_PORT: 8080
+  PUID: 1000
+  PGID: 1000
+  TZ: "Europe/Madrid"
+  TORRENTING_PORT: 6881
+  # Folders exposed to qBittorrent — add or remove entries from the HA panel
+  media_folders:
+    - /media/multimedia/downloads
+    - /media/multimedia/Movies
+
+schema:
+  WEBUI_PORT: int
+  PUID: int
+  PGID: int
+  TZ: str
+  TORRENTING_PORT: int
+  # Each entry must be an absolute path under /media or /share
+  media_folders:
+    - str
+
+# Exposed ports
+ports:
+  8080/tcp: 8080
+  6881/tcp: 6881
+  6881/udp: 6881
+
+ports_description:
+  8080/tcp: "qBittorrent WebUI port"
+  6881/tcp: "Torrenting port (TCP)"
+  6881/udp: "Torrenting port (UDP)"
+
+# Volume mapping — share and media cover all configurable paths
+map:
+  - share:rw
+  - media:rw
+
+# Environment variables passed to the container
+environment:
+  PUID: "{{PUID}}"
+  PGID: "{{PGID}}"
+  TZ: "{{TZ}}"
+  WEBUI_PORT: "{{WEBUI_PORT}}"
+  TORRENTING_PORT: "{{TORRENTING_PORT}}"
+
+# Required capabilities
+privileged: false
+apparmor: false
+
+# Sidebar panel in Home Assistant
+panel_icon: "mdi:cloud-download"
+panel_title: "qBittorrent"
+panel_admin: true
+
+# Ingress access from the panel (direct port also available)
+ingress: true
+ingress_port: 8080
+ingress_stream: false
+
+# Network mode
+host_network: false
+
+# Add-on WebUI
+webui: "http://[HOST]:[PORT:8080]"
+
+# Additional devices (none required)
+devices: []
+
+# Tmpfs for performance
+tmpfs: false
+
+# Labels
+labels:
+  io.hass.arch: "aarch64|amd64|armhf|armv7"
+
+# Resource limits (optional)
+ cpu_limit: 2.0
+ memory_limit: 1536mb
+
+startup: "application"
+boot: "auto"
+
+# Default folder mappings
+# /share/qbittorrent          → configuration and custom WebUI (always present)
+# /media/multimedia/downloads → default downloads folder  (configurable via media_folders)
+# /media/multimedia/Movies    → movies folder             (configurable via media_folders)
