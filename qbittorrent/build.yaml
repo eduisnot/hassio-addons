@@ -1,18 +1,5 @@
-##
-## Build configuration for the qBittorrent add-on
-## Based on the official linuxserver image
-##
-
 build_from:
-  aarch64: "lscr.io/linuxserver/qbittorrent:arm64v8-latest"
-  amd64: "lscr.io/linuxserver/qbittorrent:amd64-latest"
-  armhf: "lscr.io/linuxserver/qbittorrent:arm32v7-latest"
-  armv7: "lscr.io/linuxserver/qbittorrent:arm32v7-latest"
-
-squash: false
-
-labels:
-  org.opencontainers.image.title: "Home Assistant Add-on: qBittorrent"
-  org.opencontainers.image.description: "qBittorrent torrent client based on linuxserver"
-  org.opencontainers.image.source: "https://github.com/qbittorrent/qBittorrent"
-  org.opencontainers.image.licenses: "MIT"
+  aarch64: ghcr.io/home-assistant/aarch64-base:latest
+  amd64: ghcr.io/home-assistant/amd64-base:latest
+  armhf: ghcr.io/home-assistant/armhf-base:latest
+  armv7: ghcr.io/home-assistant/armv7-base:latest

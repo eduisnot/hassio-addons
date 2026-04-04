@@ -39,7 +39,7 @@ The `media_folders` option lets you add or remove folders directly from the **Co
 
 **Default value:**
 ```
-- /media/multimedia/descargas
+- /media/multimedia/downloads
 - /media/multimedia/Movies
 ```
 

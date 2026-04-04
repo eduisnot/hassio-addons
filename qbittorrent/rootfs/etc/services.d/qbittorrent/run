@@ -4,72 +4,48 @@ set -e
 
 bashio::log.info "Starting qBittorrent..."
 
-# ─── Read configuration options ───────────────────────────────────────────────
+# ─── Read options from HA Configuration panel ─────────────────────────────────
 WEBUI_PORT=$(bashio::config 'WEBUI_PORT')
 TORRENTING_PORT=$(bashio::config 'TORRENTING_PORT')
 PUID=$(bashio::config 'PUID')
 PGID=$(bashio::config 'PGID')
 TZ=$(bashio::config 'TZ')
 
-# ─── Export environment variables ─────────────────────────────────────────────
-export PUID="${PUID}"
-export PGID="${PGID}"
-export TZ="${TZ}"
-export WEBUI_PORT="${WEBUI_PORT}"
-export TORRENTING_PORT="${TORRENTING_PORT}"
-
-# ─── Create the persistent config directory ───────────────────────────────────
+# ─── Persistent config (survives add-on updates) ──────────────────────────────
 CONFIG_DIR="/share/qbittorrent"
-mkdir -p "${CONFIG_DIR}/config"
-mkdir -p "${CONFIG_DIR}/webgui"   # For optional custom WebUI files
+QB_CONFIG="${CONFIG_DIR}/config"
+mkdir -p "${QB_CONFIG}"
+mkdir -p "${CONFIG_DIR}/webgui"
 
-bashio::log.info "Config directory  : ${CONFIG_DIR}"
-bashio::log.info "Custom WebUI path : ${CONFIG_DIR}/webgui"
-bashio::log.info "WebUI port        : ${WEBUI_PORT}"
-bashio::log.info "Torrenting port   : ${TORRENTING_PORT}"
+bashio::log.info "Config dir : ${CONFIG_DIR}"
+bashio::log.info "WebUI port : ${WEBUI_PORT}"
+bashio::log.info "Torrent port: ${TORRENTING_PORT}"
 
-# ─── Create and log all user-configured media folders ─────────────────────────
-# These are read from the 'media_folders' list in the add-on Configuration panel.
-# Users can add or remove entries there without editing any file.
-bashio::log.info "Preparing media folders from configuration..."
-
-# Build a comma-separated list of paths for qBittorrent's save-path options
+# ─── Create user-configured media folders ─────────────────────────────────────
 FIRST_FOLDER=""
-ALL_FOLDERS=()
-
 for folder in $(bashio::config 'media_folders'); do
-    # Safety guard: only allow paths under /media or /share
     if [[ "${folder}" != /media/* ]] && [[ "${folder}" != /share/* ]]; then
-        bashio::log.warning "Skipping '${folder}' — only /media/* and /share/* paths are allowed."
+        bashio::log.warning "Skipping '${folder}': only /media/* and /share/* paths are allowed."
         continue
     fi
-
     mkdir -p "${folder}"
-    bashio::log.info "  ✓ ${folder}"
-    ALL_FOLDERS+=("${folder}")
-
-    # The first valid folder becomes the default save path
-    if [[ -z "${FIRST_FOLDER}" ]]; then
-        FIRST_FOLDER="${folder}"
-    fi
+    bashio::log.info "Folder ready: ${folder}"
+    [[ -z "${FIRST_FOLDER}" ]] && FIRST_FOLDER="${folder}"
 done
 
-# Fallback in case the list is empty
 if [[ -z "${FIRST_FOLDER}" ]]; then
-    bashio::log.warning "No valid media folders configured. Falling back to /media/multimedia/descargas"
-    FIRST_FOLDER="/media/multimedia/descargas"
+    bashio::log.warning "No valid folders configured — falling back to /media/downloads"
+    FIRST_FOLDER="/media/downloads"
     mkdir -p "${FIRST_FOLDER}"
 fi
+bashio::log.info "Default save path: ${FIRST_FOLDER}"
 
-bashio::log.info "Default save path : ${FIRST_FOLDER}"
-
-# ─── Bootstrap qBittorrent config on first run ────────────────────────────────
-QB_CONF="${CONFIG_DIR}/config/qBittorrent/qBittorrent.conf"
-
+# ─── Bootstrap qBittorrent.conf ───────────────────────────────────────────────
+QB_CONF="${QB_CONFIG}/qBittorrent/qBittorrent.conf"
 if [ ! -f "${QB_CONF}" ]; then
-    bashio::log.info "First run: generating initial configuration..."
+    bashio::log.info "First run — creating qBittorrent.conf"
     mkdir -p "$(dirname "${QB_CONF}")"
-    cat > "${QB_CONF}" <<EOF
+    cat > "${QB_CONF}" << EOF
 [AutoRun]
 enabled=false
 
@@ -90,31 +66,18 @@ Accepted=true
 [Meta]
 MigrationVersion=6
 
-[Network]
-Cookies=@Variant(\0\0\0\x7f\0\0\0\nQList<QNetworkCookie>\0\0\0\0\0)
-
 [Preferences]
-Advanced\RecheckOnCompletion=false
-Bittorrent\MaxRatio=-1
-Connection\GlobalDLLimit=0
-Connection\GlobalDLLimitAlt=10
-Connection\GlobalUPLimit=0
-Connection\GlobalUPLimitAlt=10
 Connection\PortRangeMin=${TORRENTING_PORT}
 Downloads\SavePath=${FIRST_FOLDER}
-Downloads\ScanDirsV2=@Variant(\0\0\0\x1c\0\0\0\0)
 Downloads\TempPath=${FIRST_FOLDER}/temp
 Downloads\TempPathEnabled=false
 General\Locale=en
 General\UseRandomPort=false
 WebUI\Address=*
 WebUI\AlternativeUIEnabled=false
-WebUI\AuthSubnetWhitelistEnabled=false
 WebUI\BanDuration=3600
 WebUI\CSRFProtection=true
 WebUI\ClickjackingProtection=true
-WebUI\CustomHTTPHeaders=
-WebUI\CustomHTTPHeadersEnabled=false
 WebUI\HTTPS\Enabled=false
 WebUI\HostHeaderValidation=true
 WebUI\LocalHostAuth=true
@@ -126,29 +89,27 @@ WebUI\ServerDomains=*
 WebUI\SessionTimeout=3600
 WebUI\Username=admin
 EOF
-    bashio::log.info "Initial config created. Username: admin, Password: adminadmin (please change it!)"
+    bashio::log.info "Config created. Login: admin / adminadmin  ← CHANGE THE PASSWORD!"
 else
-    # ── On subsequent starts, update the default save path if folders changed ──
-    bashio::log.info "Existing config found. Updating save path to: ${FIRST_FOLDER}"
-    # Update the default save path in the existing config (non-destructive sed)
     sed -i "s|^Downloads\\\\SavePath=.*|Downloads\\\\SavePath=${FIRST_FOLDER}|" "${QB_CONF}" || true
     sed -i "s|^Session\\\\DefaultSavePath=.*|Session\\\\DefaultSavePath=${FIRST_FOLDER}|" "${QB_CONF}" || true
+    bashio::log.info "Config updated."
 fi
 
-# ─── Point linuxserver's /config to our persistent /share directory ───────────
-export DOCKER_MODS=""
+# ─── Run qBittorrent as the specified user ─────────────────────────────────────
+bashio::log.info "Launching qbittorrent-nox (PUID=${PUID} PGID=${PGID})..."
 
-# Symlink: /config → /share/qbittorrent/config
-if [ ! -L "/config" ] && [ ! -d "/config" ]; then
-    ln -sf "${CONFIG_DIR}/config" /config
-elif [ -d "/config" ] && [ ! -L "/config" ]; then
-    # If it already exists as a real directory, sync it first then replace
-    rsync -a /config/ "${CONFIG_DIR}/config/" 2>/dev/null || true
-    rm -rf /config
-    ln -sf "${CONFIG_DIR}/config" /config
+# Ensure user/group exist
+if ! getent group "${PGID}" > /dev/null 2>&1; then
+    addgroup -g "${PGID}" qbittorrent 2>/dev/null || true
+fi
+if ! getent passwd "${PUID}" > /dev/null 2>&1; then
+    adduser -D -H -u "${PUID}" -G qbittorrent qbittorrent 2>/dev/null || true
 fi
 
-bashio::log.info "qBittorrent ready. Access the WebUI on port ${WEBUI_PORT}"
+chown -R "${PUID}:${PGID}" "${CONFIG_DIR}" 2>/dev/null || true
 
-# ─── Hand off to the official linuxserver init process ────────────────────────
-exec /init
+exec su-exec "${PUID}:${PGID}" \
+    qbittorrent-nox \
+    --profile="${QB_CONFIG}" \
+    --webui-port="${WEBUI_PORT}"
