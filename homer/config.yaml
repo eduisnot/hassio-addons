@@ -1,13 +1,12 @@
 name: "Homer Dashboard"
-version: "latest"
-slug: "homer"
 description: "A lightweight static dashboard for self-hosted services"
+version: "v25.10.1"
+slug: "homer"
+init: false
 
 arch:
   - aarch64
   - amd64
-
-init: false
 
 url: "https://github.com/bastienwirtz/homer"
 
