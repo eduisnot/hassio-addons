@@ -1,0 +1,38 @@
+name: "Homer Dashboard"
+description: "Dashboard estático y configurable para servicios autoalojados"
+version: "25.10.1"
+slug: "homer"
+init: false
+
+arch:
+  - aarch64
+  - amd64
+  - armv7
+
+homeassistant: "2023.1.0"
+url: "https://github.com/bastienwirtz/homer"
+
+image: "b4bz/homer"
+
+webui: "http://[HOST]:[8080]"
+
+ports:
+  8080/tcp: 8080
+
+ports_description:
+  8080/tcp: "Interfaz web de Homer"
+
+map:
+  - type: addon_config
+    path: /www/assets
+    read_only: false
+
+environment:
+  INIT_ASSETS: "1"
+  PORT: "8080"
+
+options:
+  log_level: "info"
+
+schema:
+  log_level: list(error|warn|info|debug)
