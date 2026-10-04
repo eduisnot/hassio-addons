@@ -1,0 +1,21 @@
+name: "Dockhand Local"
+description: "Administrador moderno de Docker y Docker Compose integrado en Home Assistant"
+version: "1.0.51"
+slug: "dockhand_local"
+init: false
+arch:
+  - amd64
+  - aarch64
+  - armv7
+image: "fnsys/dockhand" # <- Aquí le ordenamos usar la imagen oficial directa de DockerHub sin Dockerfile
+startup: application
+panel_icon: "mdi:docker"
+panel_title: "Dockhand"
+ingress: true # <- Permite verlo de forma nativa en la barra lateral mediante Ingress seguro
+privileged:
+  - SYS_ADMIN # Permite gestionar contenedores a nivel de sistema
+host_pid: true # Opcional: Para métricas avanzadas de CPU/RAM del host
+map:
+  - share:rw # Mapea la carpeta share de tu HAOS para guardar de forma segura los Stacks que crees
+options: {}
+schema: {}
