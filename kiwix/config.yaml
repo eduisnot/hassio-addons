@@ -7,19 +7,11 @@ arch:
   - amd64
   - aarch64
   - armv7
-# ---- LA RUTA CORRECTA EN GITHUB REGISTRY ----
-image: "ghcr.io/kiwix/kiwix-serve:latest"
 startup: application
 panel_icon: "mdi:wikipedia"
 ingress: true
 ingress_port: 8080
 map:
-  - share:ro # Mapea tu carpeta /share de HAOS en modo lectura
+  - share:ro
 ports:
   8080/tcp: 8080
-options: {}
-schema: {}
-# ---- COMANDO INTERNO DE KIWIX PARA APUNTAR A LA CARPETA COMPARTIDA ----
-args:
-  - "--port=8080"
-  - "/share/kiwix/*.zim"
