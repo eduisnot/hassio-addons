@@ -1,12 +1,12 @@
 name: Kiwix
 version: "1.0.0"
 slug: kiwix
-description: Servidor Kiwix para consultar archivos ZIM almacenados en /share/kiwix
+description: Servidor Kiwix para archivos ZIM almacenados en /share/kiwix
 url: "https://github.com/TU_USUARIO/TU_REPOSITORIO"
-image: "ghcr.io/kiwix/kiwix-serve"
+
 arch:
-  - aarch64
   - amd64
+  - aarch64
   - armv7
 
 startup: services
@@ -19,17 +19,18 @@ ports_description:
   8080/tcp: Interfaz web de Kiwix
 
 webui: "http://[HOST]:[8080]"
+watchdog: "tcp://[HOST]:[8080]"
 
 map:
-  - share:rw
+  - type: share
+    read_only: true
 
 options:
-  library_file: ""
-  zim_file: ""
+  threads: 4
+  verbose: false
+  block_external: true
 
 schema:
-  library_file: str?
-  zim_file: str?
-
-environment:
-  TZ: Europe/Madrid
+  threads: int(1,32)
+  verbose: bool
+  block_external: bool
