@@ -7,16 +7,21 @@ arch:
   - amd64
   - aarch64
   - armv7
-image: "fnsys/dockhand"
+image: fnsys/dockhand
 startup: application
 panel_icon: "mdi:docker"
 panel_title: "Dockhand"
 ingress: true
-ingress_port: 3000 # <- CORREGIDO: Dockhand escucha internamente en el puerto 3000
+ingress_port: 3000
 privileged:
   - SYS_ADMIN
 host_pid: true
 map:
   - share:rw
-options: {}
-schema: {}
+# ---- ESTO ABRE EL PUERTO HACIA TU RED LOCAL ----
+options:
+  port: 3000
+schema:
+  port: port
+ports:
+  3000/tcp: 3000
