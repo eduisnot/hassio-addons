@@ -1,8 +1,8 @@
 name: "Homer Dashboard"
 version: "latest"
-slug: "homer"
-description: "Homer is a static dashboard for organizing and accessing your self-hosted services."
-url: "https://github.com/bastienwirtz/homer"
+slug: "homer-dashboard"
+description: "A simple static homepage for your server, easy to configure via a single yaml file."
+url: "https://github.com"
 
 arch:
   - aarch64
@@ -18,19 +18,24 @@ ports:
   8080/tcp: 8080
 
 ports_description:
-  8080/tcp: "Homer Dashboard WebUI"
-
-webui: "http://[HOST]:[8080]"
-
-watchdog: "http://[HOST]:[8080]"
+  8080/tcp: "Homer WebUI (HTTP)"
+  
+webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - type: addon_config
+  - type: config
     read_only: false
     path: /www/assets
 
-environment:
-  INIT_ASSETS: "1"
+options:
+  TZ: "Europe/Madrid"
 
-panel_icon: "mdi:view-dashboard"
-panel_title: "Homer"
+schema:
+  TZ: str
+
+environment:
+  TZ: "Europe/Madrid"
+  UID: "1000"
+  GID: "1000"
+
+panel_icon: "mdi:home-dashboard"
