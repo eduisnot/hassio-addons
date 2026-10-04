@@ -17,4 +17,4 @@ ports_description:
   8080/tcp: "Kiwix Web UI"
 
 map:
-  - share:ro
+  - media:ro
