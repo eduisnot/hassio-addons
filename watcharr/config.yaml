@@ -1,22 +1,25 @@
 name: "Watcharr Local"
 description: "Un gestor autohospedado para tus listas de seguimiento de películas, series y videojuegos"
-version: "v4.2.2" # Versión estable actual de Watcharr en GitHub
+version: "v4.2.2"
 slug: "watcharr_local"
 init: false
 arch:
   - amd64
   - aarch64
-image: "ghcr.io/sbondco/watcharr" # Descarga la imagen oficial de los desarrolladores
+image: "ghcr.io/sbondco/watcharr"
 startup: application
 panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
-ingress: true # Te permite verlo integrado en la barra lateral sin abrir puertos
-ingress_port: 3080 # Puerto interno en el que escucha Watcharr
+ingress: true
+ingress_port: 3080
 map:
-  - share:rw # ¡La clave! Mapea la carpeta /share con permisos de lectura y escritura nativos
+  - share:rw
 options:
   port: 3080
 schema:
   port: port
 ports:
-  3080/tcp: 3080 # Abre el puerto 3080 para acceder desde cualquier navegador local
+  3080/tcp: 3080
+# ---- ESTO OBLIGA A WATCHARR A ESCRIBIR EN LA CARPETA COMPARTIDA DE HAOS ----
+environment:
+  DB_PATH: "/share/watcharr.db"
