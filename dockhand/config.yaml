@@ -7,15 +7,15 @@ arch:
   - amd64
   - aarch64
   - armv7
-image: "fnsys/dockhand" # <- Aquí le ordenamos usar la imagen oficial directa de DockerHub sin Dockerfile
+image: "fnsys/dockhand:v{version}" # <- Añadimos la "v" antes de la variable {version}
 startup: application
 panel_icon: "mdi:docker"
 panel_title: "Dockhand"
-ingress: true # <- Permite verlo de forma nativa en la barra lateral mediante Ingress seguro
+ingress: true
 privileged:
-  - SYS_ADMIN # Permite gestionar contenedores a nivel de sistema
-host_pid: true # Opcional: Para métricas avanzadas de CPU/RAM del host
+  - SYS_ADMIN
+host_pid: true
 map:
-  - share:rw # Mapea la carpeta share de tu HAOS para guardar de forma segura los Stacks que crees
+  - share:rw
 options: {}
 schema: {}
