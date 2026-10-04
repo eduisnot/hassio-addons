@@ -1,7 +1,7 @@
 name: Kiwix
-version: "1.0.0"
 slug: kiwix
 description: Servidor Kiwix para archivos ZIM almacenados en /share/kiwix
+version: "1.0.1"
 url: "https://github.com/TU_USUARIO/TU_REPOSITORIO"
 
 arch:
@@ -22,8 +22,7 @@ webui: "http://[HOST]:[8080]"
 watchdog: "tcp://[HOST]:[8080]"
 
 map:
-  - type: share
-    read_only: true
+  share:ro
 
 options:
   threads: 4
