@@ -13,11 +13,11 @@ panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
 map:
-  - addon_config:rw # <- Crea y mapea automáticamente /addon_configs/watcharr con permisos de escritura
+  - addon_config:rw # <- Habilita la ruta física /addon_configs/watcharr
+# ---- AQUÍ ESTÁ LA SOLUCIÓN DEFINITIVA DE RUTAS ----
+binds:
+  - "addon_config:/data:rw" # <- Vincula la carpeta interna fija (/data) con tu carpeta visible de HAOS
 ports:
-  3080/tcp: null # Interfaz web (No requerida externamente si usas Ingress, igual que Glances)
+  3080/tcp: null
 options: {}
 schema: {}
-environment:
-  DB_PATH: "/config/watcharr.db" # <- Al usar addon_config, la ruta interna del contenedor pasa a ser /config
-  STORAGE_DIR: "/config"
