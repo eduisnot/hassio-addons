@@ -1,0 +1,59 @@
+name: "Scrutiny"
+version: "1.0.0"
+slug: "scrutiny"
+description: "S.M.A.R.T. disk health monitoring with historical data and a web dashboard."
+url: "https://github.com/AnalogJ/scrutiny"
+
+arch:
+  - aarch64
+  - amd64
+
+image: "ghcr.io/analogj/scrutiny"
+
+init: false
+startup: "application"
+boot: "auto"
+
+ports:
+  8080/tcp: 8080
+
+ports_description:
+  8080/tcp: "Scrutiny WebUI"
+
+webui: "http://[HOST]:[8080]"
+
+watchdog: "http://[HOST]:[8080]/api/health"
+
+map:
+  - type: addon_config
+    read_only: false
+
+devices:
+  - "/dev/nvme0n1"
+  - "/dev/sda"
+
+udev: true
+
+privileged:
+  - SYS_RAWIO
+  - SYS_ADMIN
+
+options:
+  device: "/dev/nvme0n1"
+  collector_cron_schedule: "0 3 * * *"
+  timezone: "Europe/Madrid"
+  debug: false
+
+schema:
+  device: str
+  collector_cron_schedule: str
+  timezone: str
+  debug: bool
+
+environment:
+  TZ: "Europe/Madrid"
+  COLLECTOR_CRON_SCHEDULE: "0 3 * * *"
+  DEBUG: "false"
+
+panel_icon: "mdi:harddisk"
+panel_title: "Scrutiny"
