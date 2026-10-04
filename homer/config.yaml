@@ -23,7 +23,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - addon_config:rw
+  - addon_config:rw/www/assets
 
 options:
   TZ: "Europe/Madrid"
@@ -33,8 +33,6 @@ schema:
 
 environment:
   TZ: "Europe/Madrid"
-  assets: "/config"      # <-- Mapea los ajustes a la ruta de addon_config interna
-  INIT_ASSETS: "1"      # <-- Le dice a Homer que inicialice el config.yml de ejemplo allí
-  SUB_FOLDER: ""        # <-- Evita errores de rutas relativas con el servidor web estático
+  INIT_ASSETS: "1"
 
 panel_icon: "mdi:home-dashboard"
