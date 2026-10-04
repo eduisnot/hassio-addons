@@ -12,14 +12,15 @@ panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
+# ---- MAPEO CLAVE: Redirige la carpeta interna /data hacia la carpeta física /share de HAOS ----
 map:
   - share:rw
+# ---- ASIGNACIÓN DE VOLÚMENES: Forzamos el montaje del directorio de Watcharr ----
+volumes:
+  - /share/watcharr:/data:rw
 options:
   port: 3080
 schema:
   port: port
 ports:
   3080/tcp: 3080
-environment:
-  DB_PATH: "/share/watcharr/watcharr.db"
-  STORAGE_DIR: "/share/watcharr"
