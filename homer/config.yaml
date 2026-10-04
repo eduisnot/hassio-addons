@@ -23,7 +23,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - addon_config:rw
+  - addon_config:rw/www/assets  # <--- MAPEO EXACTO: Conecta directamente la carpeta física con los assets de la app
 
 options:
   TZ: "Europe/Madrid"
@@ -33,9 +33,8 @@ schema:
 
 environment:
   TZ: "Europe/Madrid"
-  assets: "/config"      # <-- Hace que Homer busque la configuración en /addon_configs
-  INIT_ASSETS: "0"      # <-- Apaga el instalador problemático interno de la imagen
-  UID: "0"              # <-- Fuerza permisos root para que no falle la lectura del directorio
-  GID: "0"              # <-- Fuerza permisos root para el grupo
+  INIT_ASSETS: "0"  # <--- OBLIGATORIO: Apaga el instalador interactivo de la imagen para que no pregunte "overwrite?" y no aborte
+  UID: "0"          # <--- OBLIGATORIO: Ejecuta como root para saltar el bloqueo "Assets directory not writable"
+  GID: "0"
 
 panel_icon: "mdi:home-dashboard"
