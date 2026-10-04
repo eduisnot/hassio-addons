@@ -1,5 +1,5 @@
 name: "Homer Dashboard"
-version: "latest"
+version: "1.0.0"
 slug: "homer-dashboard"
 description: "A simple static homepage for your server, easy to configure via a single yaml file."
 url: "https://github.com"
@@ -7,8 +7,6 @@ url: "https://github.com"
 arch:
   - aarch64
   - amd64
-
-image: "b4bz/homer"
 
 init: false
 startup: "application"
@@ -23,16 +21,6 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - addon_config:rw/www/assets
-
-options:
-  TZ: "Europe/Madrid"
-
-schema:
-  TZ: str
-
-environment:
-  TZ: "Europe/Madrid"
-  INIT_ASSETS: "1"
+  - addon_config:rw
 
 panel_icon: "mdi:home-dashboard"
