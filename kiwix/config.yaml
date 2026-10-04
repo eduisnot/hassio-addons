@@ -7,17 +7,19 @@ arch:
   - amd64
   - aarch64
   - armv7
-image: "kiwix/kiwix-serve" # <- Descarga la imagen oficial lista para usar sin compilar nada
+# ---- LA RUTA CORRECTA EN GITHUB REGISTRY ----
+image: "ghcr.io/kiwix/kiwix-serve:latest"
 startup: application
 panel_icon: "mdi:wikipedia"
-ingress: true # Opcional: Te permite verlo integrado en la barra lateral de HA
+ingress: true
 ingress_port: 8080
 map:
-  - share:ro # <- Mapea de forma segura tu carpeta /share de HAOS en modo solo lectura
+  - share:ro # Mapea tu carpeta /share de HAOS en modo lectura
 ports:
   8080/tcp: 8080
 options: {}
 schema: {}
-# ---- AQUÍ REEMPLAZAMOS EL RUN.SH PASANDO LOS ARGUMENTOS DIRECTOS AL BINARIO ----
+# ---- COMANDO INTERNO DE KIWIX PARA APUNTAR A LA CARPETA COMPARTIDA ----
 args:
-  - "*.zim" # <- Comando nativo de la imagen oficial de Kiwix para leer todos los archivos .zim de la raíz montada
+  - "--port=8080"
+  - "/share/kiwix/*.zim"
