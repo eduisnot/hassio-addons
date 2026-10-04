@@ -1,13 +1,13 @@
 name: "Dockhand Local"
 description: "Administrador moderno de Docker y Docker Compose integrado en Home Assistant"
-version: "1.0.51"
+version: "v1.0.51" # <- CLAVE: Añadimos la "v" aquí dentro del string de versión
 slug: "dockhand_local"
 init: false
 arch:
   - amd64
   - aarch64
   - armv7
-image: "fnsys/dockhand" # <- Dejar SOLO el nombre de la imagen (sin tags ni :latest)
+image: "fnsys/dockhand" # <- Queda limpio
 startup: application
 panel_icon: "mdi:docker"
 panel_title: "Dockhand"
