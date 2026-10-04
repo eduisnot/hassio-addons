@@ -1,4 +1,3 @@
-@@ -0,0 +1,9 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
