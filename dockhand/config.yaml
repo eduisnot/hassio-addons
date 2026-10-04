@@ -13,12 +13,13 @@ panel_icon: "mdi:docker"
 panel_title: "Dockhand"
 ingress: true
 ingress_port: 3000
+docker_api: true # <- CLAVE: Le dice al Supervisor que monte el archivo /var/run/docker.sock dentro del contenedor
+apparmor: false # <- CLAVE: Desactiva las restricciones estrictas de seguridad de HAOS sobre este contenedor
 privileged:
   - SYS_ADMIN
 host_pid: true
 map:
   - share:rw
-# ---- ESTO ABRE EL PUERTO HACIA TU RED LOCAL ----
 options:
   port: 3000
 schema:
