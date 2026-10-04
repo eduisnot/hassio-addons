@@ -1,7 +1,7 @@
-name: "Watcharr Local"
-description: "Un gestor autohospedado para tus listas de seguimiento de películas, series y videojuegos"
+name: "Watcharr"
+description: "A movie, TV show, and game watchlist tracker"
 version: "v4.2.2"
-slug: "watcharr_local"
+slug: "watcharr"
 init: false
 arch:
   - amd64
@@ -20,6 +20,5 @@ schema:
   port: port
 ports:
   3080/tcp: 3080
-# ---- ESTO OBLIGA A WATCHARR A ESCRIBIR EN LA CARPETA COMPARTIDA DE HAOS ----
 environment:
   DB_PATH: "/share/watcharr.db"
