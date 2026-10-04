@@ -12,12 +12,9 @@ panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
-# ---- MAPEO COMPLETO NATIVO DE HOME ASSISTANT ----
+# ---- ESTA ES LA CONFIGURACIÓN CORRECTA ----
 map:
-  - share:rw
-# ---- FORZAMOS EL MONTAJE DIRECTO DE LA CARPETA EN LA RAÍZ INTERNA ----
-binds:
-  - "share/watcharr:/data:rw"
+  - data:rw # <- Le dice a HA que fusione la carpeta interna /data del contenedor con tu disco
 options:
   port: 3080
 schema:
