@@ -7,7 +7,7 @@ arch:
   - amd64
   - aarch64
   - armv7
-image: "fnsys/dockhand:v{version}" # <- Añadimos la "v" antes de la variable {version}
+image: "fnsys/dockhand" # <- Dejar SOLO el nombre de la imagen (sin tags ni :latest)
 startup: application
 panel_icon: "mdi:docker"
 panel_title: "Dockhand"
