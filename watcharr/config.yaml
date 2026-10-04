@@ -21,4 +21,5 @@ schema:
 ports:
   3080/tcp: 3080
 environment:
-  DB_PATH: "/share/watcharr.db"
+  DB_PATH: "/share/watcharr/watcharr.db"
+  STORAGE_DIR: "/share/watcharr"
