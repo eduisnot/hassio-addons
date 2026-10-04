@@ -12,12 +12,12 @@ panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
-# ---- MAPEO CLAVE: Redirige la carpeta interna /data hacia la carpeta física /share de HAOS ----
+# ---- MAPEO COMPLETO NATIVO DE HOME ASSISTANT ----
 map:
   - share:rw
-# ---- ASIGNACIÓN DE VOLÚMENES: Forzamos el montaje del directorio de Watcharr ----
-volumes:
-  - /share/watcharr:/data:rw
+# ---- FORZAMOS EL MONTAJE DIRECTO DE LA CARPETA EN LA RAÍZ INTERNA ----
+binds:
+  - "share/watcharr:/data:rw"
 options:
   port: 3080
 schema:
