@@ -12,12 +12,12 @@ panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
-# ---- ESTA ES LA CONFIGURACIÓN CORRECTA ----
 map:
-  - data:rw # <- Le dice a HA que fusione la carpeta interna /data del contenedor con tu disco
-options:
-  port: 3080
-schema:
-  port: port
+  - addon_config:rw # <- Crea y mapea automáticamente /addon_configs/watcharr con permisos de escritura
 ports:
-  3080/tcp: 3080
+  3080/tcp: null # Interfaz web (No requerida externamente si usas Ingress, igual que Glances)
+options: {}
+schema: {}
+environment:
+  DB_PATH: "/config/watcharr.db" # <- Al usar addon_config, la ruta interna del contenedor pasa a ser /config
+  STORAGE_DIR: "/config"
