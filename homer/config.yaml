@@ -23,7 +23,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - addon_config:rw/www/assets  # <--- MAPEO EXACTO: Conecta directamente la carpeta física con los assets de la app
+  - addon_config:rw
 
 options:
   TZ: "Europe/Madrid"
@@ -33,8 +33,9 @@ schema:
 
 environment:
   TZ: "Europe/Madrid"
-  INIT_ASSETS: "0"  # <--- OBLIGATORIO: Apaga el instalador interactivo de la imagen para que no pregunte "overwrite?" y no aborte
-  UID: "0"          # <--- OBLIGATORIO: Ejecuta como root para saltar el bloqueo "Assets directory not writable"
+  assets: "/config"
+  INIT_ASSETS: "0"  # <--- DESACTIVA POR COMPLETO EL COPIADO PROBLEMÁTICO INTERNO
+  UID: "0"          # <--- EVITA EL ERROR DE PERMISOS "NOT WRITABLE"
   GID: "0"
 
 panel_icon: "mdi:home-dashboard"
