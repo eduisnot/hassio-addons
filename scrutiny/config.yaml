@@ -1,14 +1,14 @@
 name: "Scrutiny"
 version: "1.0.0"
 slug: "scrutiny"
-description: "S.M.A.R.T. disk health monitoring with historical data and a web dashboard."
+description: "S.M.A.R.T. disk health monitoring, historical metrics, and a web dashboard."
 url: "https://github.com/AnalogJ/scrutiny"
 
 arch:
   - aarch64
   - amd64
 
-image: "ghcr.io/analogj/scrutiny"
+image: "local/{arch}-scrutiny"
 
 init: false
 startup: "application"
@@ -29,30 +29,29 @@ map:
     read_only: false
 
 devices:
-  - "/dev/nvme0n1"
-  - "/dev/sda"
+  - "/dev"
 
 udev: true
 
-privileged:
-  - SYS_RAWIO
-  - SYS_ADMIN
+full_access: true
 
 options:
-  device: "/dev/nvme0n1"
   collector_cron_schedule: "0 3 * * *"
-  timezone: "Europe/Madrid"
+  collector_run_startup: true
   debug: false
+  timezone: "Europe/Madrid"
 
 schema:
-  device: str
   collector_cron_schedule: str
-  timezone: str
+  collector_run_startup: bool
   debug: bool
+  timezone: str
 
 environment:
   TZ: "Europe/Madrid"
   COLLECTOR_CRON_SCHEDULE: "0 3 * * *"
+  COLLECTOR_RUN_STARTUP: "true"
+  COLLECTOR_RUN_STARTUP_SLEEP: "10"
   DEBUG: "false"
 
 panel_icon: "mdi:harddisk"
