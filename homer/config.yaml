@@ -36,5 +36,6 @@ environment:
   UID: "1000"
   GID: "1000"
   assets: "/config"
+  INIT_ASSETS: "1"
 
 panel_icon: "mdi:home-dashboard"
