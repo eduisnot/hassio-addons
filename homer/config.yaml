@@ -13,7 +13,6 @@ image: "b4bz/homer"
 init: false
 startup: "application"
 boot: "auto"
-full_access: true  # <--- AGREGA ESTA LÍNEA (Da permisos para escribir los archivos)
 
 ports:
   8080/tcp: 8080
@@ -24,7 +23,9 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - addon_config:rw
+  - type: share
+    read_only: false
+    path: /www
 
 options:
   TZ: "Europe/Madrid"
@@ -34,7 +35,5 @@ schema:
 
 environment:
   TZ: "Europe/Madrid"
-  assets: "/config"
-  INIT_ASSETS: "1"
 
 panel_icon: "mdi:home-dashboard"
