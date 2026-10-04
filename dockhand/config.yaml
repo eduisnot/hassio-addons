@@ -1,17 +1,18 @@
 name: "Dockhand Local"
 description: "Administrador moderno de Docker y Docker Compose integrado en Home Assistant"
-version: "v1.0.51" # <- CLAVE: Añadimos la "v" aquí dentro del string de versión
+version: "v1.0.51"
 slug: "dockhand_local"
 init: false
 arch:
   - amd64
   - aarch64
   - armv7
-image: "fnsys/dockhand" # <- Queda limpio
+image: "fnsys/dockhand"
 startup: application
 panel_icon: "mdi:docker"
 panel_title: "Dockhand"
 ingress: true
+ingress_port: 3000 # <- CORREGIDO: Dockhand escucha internamente en el puerto 3000
 privileged:
   - SYS_ADMIN
 host_pid: true
