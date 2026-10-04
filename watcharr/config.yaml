@@ -12,12 +12,13 @@ panel_icon: "mdi:movie-roll"
 panel_title: "Watcharr"
 ingress: true
 ingress_port: 3080
+# ---- CONFIGURACIÓN ESTÁNDAR OFICIAL DE HOME ASSISTANT ----
 map:
-  - addon_config:rw # <- Habilita la ruta física /addon_configs/watcharr
-# ---- AQUÍ ESTÁ LA SOLUCIÓN DEFINITIVA DE RUTAS ----
-binds:
-  - "addon_config:/data:rw" # <- Vincula la carpeta interna fija (/data) con tu carpeta visible de HAOS
+  - addon_config:rw # <- Esto monta /addon_configs/watcharr de HAOS en la ruta interna /config del contenedor
 ports:
   3080/tcp: null
 options: {}
 schema: {}
+# ---- AQUÍ TRADUCIMOS LA RUTA DE LA APLICACIÓN ----
+environment:
+  APP_DATA_DIR: "/config" # <- Le ordena a Watcharr trabajar por completo dentro de la carpeta mapeada
