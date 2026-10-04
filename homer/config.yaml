@@ -1,5 +1,5 @@
 name: "Homer Dashboard"
-version: "1.0.0"
+version: "latest"
 slug: "homer-dashboard"
 description: "A simple static homepage for your server, easy to configure via a single yaml file."
 url: "https://github.com"
@@ -7,6 +7,8 @@ url: "https://github.com"
 arch:
   - aarch64
   - amd64
+
+image: "b4bz/homer"
 
 init: false
 startup: "application"
@@ -22,5 +24,18 @@ webui: "http://[HOST]:[PORT:8080]"
 
 map:
   - addon_config:rw
+
+options:
+  TZ: "Europe/Madrid"
+
+schema:
+  TZ: str
+
+environment:
+  TZ: "Europe/Madrid"
+  assets: "/config"      # <-- Hace que Homer busque la configuración en /addon_configs
+  INIT_ASSETS: "0"      # <-- Apaga el instalador problemático interno de la imagen
+  UID: "0"              # <-- Fuerza permisos root para que no falle la lectura del directorio
+  GID: "0"              # <-- Fuerza permisos root para el grupo
 
 panel_icon: "mdi:home-dashboard"
