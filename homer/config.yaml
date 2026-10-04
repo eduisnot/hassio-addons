@@ -23,9 +23,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:8080]"
 
 map:
-  - type: config
-    read_only: false
-    path: /www/assets
+  - addon_config:rw
 
 options:
   TZ: "Europe/Madrid"
@@ -37,5 +35,6 @@ environment:
   TZ: "Europe/Madrid"
   UID: "1000"
   GID: "1000"
+  assets: "/config"
 
 panel_icon: "mdi:home-dashboard"
