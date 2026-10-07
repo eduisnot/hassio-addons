@@ -1,6 +1,6 @@
 name: "Readeck"
 description: "Readeck - save and read it later"
-version: "0.22.2"
+version: "1.0.0" # Puedes dejar este número fijo para siempre
 slug: "readeck"
 init: false
 arch:
@@ -10,7 +10,7 @@ arch:
 homeassistant: "2023.1.0"
 url: "https://readeck.org"
 
-image: "codeberg.org/readeck/readeck"
+# ¡IMPORTANTE!: Hemos borrado la línea "image:" que daba el error 404
 
 ports:
   8000/tcp: 8000
