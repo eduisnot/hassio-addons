@@ -19,17 +19,17 @@ ports_description:
   4533/tcp: "Navidrome Web UI y API"
 
 map:
-  - share:rw
+  - media:rw
 
 environment:
-  ND_MUSICFOLDER: "/share/music"
+  ND_MUSICFOLDER: "/media/music"
   ND_DATAFOLDER: "/data"
   ND_LOGLEVEL: "info"
   ND_PORT: "4533"
   ND_ADDRESS: "0.0.0.0"
 
 options:
-  music_folder: "/share/music"
+  music_folder: "/media/music"
   log_level: "info"
 
 schema:
