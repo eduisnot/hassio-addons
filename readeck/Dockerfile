@@ -1,1 +1,1 @@
-FROM codeberg.org/readeck/readeck/readeck:latest
+FROM codeberg.org/readeck/readeck:latest
